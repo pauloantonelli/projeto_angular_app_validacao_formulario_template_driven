@@ -1,0 +1,112 @@
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link active" routerLink="home" routerLinkActive="active">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="cliente" routerLinkActive="active">Formulário cliente</a>
+  </li>
+</ul>
+
+<form #f="ngForm" (submit)="onSubmit(f)" class="container-fluid">
+
+  <div class="form-group">
+    <label for="inputNome2">Nome</label>
+    <input type="text" class="form-control" id="inputNome2" placeholder="Digite seu nome completo" name="nome" ngModel #nome="ngModel" minlength="3" [(ngModel)]="f.form.value.nome" required>
+      <app-error-message
+        [hidden]="nome.valid"
+        errorMessage="O nome é obrigatório"
+      ></app-error-message>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Email</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="email" ngModel
+        #email="ngModel" email [(ngModel)]="f.form.value.email" required>
+        <app-error-message
+          [hidden]="email.valid"
+          errorMessage="Digite um email válido"
+        ></app-error-message>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Password</label>
+      <input type="password" class="form-control" id="inputPassword4" name="senha" placeholder="Password" ngModel
+        #senha="ngModel" minlength="4" maxlength="8" [(ngModel)]="f.form.value.senha" required>
+        <app-error-message
+          [hidden]="senha.valid"
+          errorMessage="A senha deve conter entre 4 e 8 caracteres"
+        ></app-error-message>
+    </div>
+  </div>
+
+  <div ngModelGroup="enderecos" class="grupoFormulario">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="inputZip">CEP</label>
+        <input (focus)="limpaFormulario(f)" (blur)="consultaCep($event.target.value, f)" type="number" class="form-control" id="inputZip" name="cep" ngModel #cep="ngModel" minlength="8" maxlength="8" [(ngModel)]="f.form.value.enderecos.cep" required>
+        <app-error-message
+        [hidden]="cep.valid"
+        errorMessage="CEP inválido"
+        ></app-error-message>
+      </div>
+      <div class="form-group col-md-8">
+          <label for="inputZip">Bairro</label>
+          <input (focus)="limpaFormulario(f)" (blur)="consultaCep($event.target.value, f)" type="text" class="form-control" id="inputZip" name="bairro" ngModel #bairro="ngModel" minlength="4" [(ngModel)]="f.form.value.enderecos.bairro" required>
+          <app-error-message
+          [hidden]="bairro.valid"
+          errorMessage="Bairro inválido"
+          ></app-error-message>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="inputAddress">Address</label>
+      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="endereco1" minlength="4" ngModel
+        #endereco1="ngModel" [(ngModel)]="f.form.value.enderecos.endereco1" required>
+        <app-error-message
+          [hidden]="endereco1.valid"
+          errorMessage="Endereco obrigatório"
+        ></app-error-message>
+    </div>
+    <div class="form-group">
+      <label for="inputAddress2">Address 2</label>
+      <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor"
+        name="endereco2" ngModel [(ngModel)]="f.form.value.enderecos.endereco2" #endereco2="ngModel">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputCity">City</label>
+        <input type="text" class="form-control" id="inputCity" name="cidade" ngModel #cidade="ngModel" minlength="4" [(ngModel)]="f.form.value.enderecos.cidade" required>
+        <app-error-message
+          [hidden]="cidade.valid"
+          errorMessage="Digite a sua cidade"
+        ></app-error-message>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputState">State</label>
+        <input type="text" class="form-control" id="inputState" name="estado" ngModel #estado="ngModel" minlength="2" [(ngModel)]="f.form.value.enderecos.estado" required>
+        <app-error-message
+          [hidden]="estado.valid"
+          errorMessage="Digite o seu estado"
+        ></app-error-message>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <label class="form-check-label" for="gridCheck">
+        Check me out
+      </label>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Sign in</button>
+
+</form>
+
+<br>
+
+<div class="container">
+  <app-debug-form [formulario]="f"></app-debug-form>
+</div>
